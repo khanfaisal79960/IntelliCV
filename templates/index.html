@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliCV - Smart Resume Parser</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href='https://png.pngtree.com/png-vector/20190411/ourlarge/pngtree-vector-resume-icon-png-image_927259.jpg' rel='icon' type='image/png'>   
+ <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Vibrant gradient background */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; /* Utilize full screen height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem; /* Consistent padding */
+        }
+        .container-wrapper {
+            width: 100%;
+            max-width: 1200px; /* Increased max-width for full screen feel */
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem; /* Spacing between sections */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+            padding: 3rem; /* More generous padding */
+            backdrop-filter: blur(8px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .btn-primary {
+            background-color: #f6ad55; /* Vibrant orange */
+            color: #374151; /* Dark gray for contrast */
+            padding: 1rem 2rem;
+            border-radius: 9999px; /* Pill-shaped button */
+            transition: all 0.3s ease;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 15px rgba(246, 173, 85, 0.4);
+        }
+        .btn-primary:hover {
+            background-color: #ed8936; /* Darker orange on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 6px 20px rgba(237, 137, 54, 0.5);
+        }
+        .flash-message {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .flash-error {
+            background-color: #fef2f2; /* Red-50 */
+            color: #dc2626; /* Red-600 */
+            border: 1px solid #fca5a5; /* Red-300 */
+        }
+        .section-title {
+            font-size: 1.75rem; /* Text-2xl */
+            font-weight: 800; /* Font-extrabold */
+            color: #2d3748; /* Darker gray */
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #667eea; /* Indigo accent border */
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        .section-content {
+            background-color: #f8fafc; /* Very light gray for content background */
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #4a5568; /* Gray-700 */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06); /* Subtle inner shadow */
+        }
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8); /* Slightly transparent white text */
+            font-size: 0.95rem;
+            background-color: rgba(0, 0, 0, 0.2); /* Darker transparent background for footer */
+            border-radius: 1rem;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            width: 100%;
+            max-width: 1200px;
+        }
+        .footer a {
+            color: #f6ad55; /* Vibrant orange for links */
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #ed8936; /* Darker orange on hover */
+            text-decoration: underline;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem; /* Space between icons */
+            margin-top: 1rem;
+        }
+        .social-icons a {
+            font-size: 1.75rem; /* Larger icons */
+            color: white; /* White icons */
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .social-icons a:hover {
+            transform: translateY(-3px) scale(1.1); /* Lift and grow on hover */
+            color: #f6ad55; /* Orange on hover */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .card {
+                padding: 2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .grid-cols-1.md\:grid-cols-2 {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+            }
+            .btn-primary {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .error-code {
+                font-size: 6rem;
+            }
+            .error-message {
+                font-size: 1.75rem;
+            }
+            .error-description {
+                font-size: 1rem;
+            }
+            .error-container {
+                padding: 2rem;
+            }
+            .social-icons {
+                gap: 1rem;
+            }
+            .social-icons a {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+    <div class="container-wrapper">
+        <div class="card w-full text-center">
+            <h1 class="text-5xl font-extrabold text-gray-900 mb-4 animate-fadeIn">IntelliCV</h1>
+            <p class="text-xl text-gray-700 mb-8">Your Smart Resume Parsing Solution</p>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="mb-6">
+                        {% for category, message in messages %}
+                            <li class="flash-message flash-{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Upload Form -->
+            <form action="/parse" method="post" enctype="multipart/form-data" class="mb-10 p-8 border border-gray-200 rounded-2xl bg-white shadow-lg">
+                <div class="mb-8">
+                    <label for="resume_file" class="block text-xl font-semibold text-gray-800 mb-3">Upload Your Resume (PDF, DOCX, TXT):</label>
+                    <input type="file" name="resume_file" id="resume_file" accept=".pdf,.docx,.txt" class="block w-full text-base text-gray-900 border border-gray-300 rounded-xl cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-base file:font-semibold file:bg-gradient-to-r file:from-purple-500 file:to-indigo-600 file:text-white hover:file:from-purple-600 hover:file:to-indigo-700 transition duration-300 ease-in-out">
+                </div>
+                <button type="submit" class="w-full btn-primary">Parse Resume</button>
+            </form>
+        </div>
+
+        <!-- Display Results -->
+        {% if extracted_data %}
+            <div class="card w-full">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center">Extracted Resume Insights</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8"> {# Adjusted grid for fewer sections #}
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-md">
+                        <h3 class="section-title">Contact Information</h3>
+                        <div class="section-content">
+                            <p class="mb-2"><strong>Email:</strong> <span class="font-medium">{{ extracted_data.email if extracted_data.email else 'N/A' }}</span></p>
+                            <p><strong>Phone:</strong> <span class="font-medium">{{ extracted_data.phone if extracted_data.phone else 'N/A' }}</span></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl shadow-md">
+                        <h3 class="section-title">Education Background</h3>
+                        <div class="section-content">
+                            <p>{{ extracted_data.education if extracted_data.education else 'No education section found.' }}</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-xl shadow-md">
+                        <h3 class="section-title">Work Experience</h3>
+                        <div class="section-content">
+                            <p>{{ extracted_data.experience if extracted_data.experience else 'No experience section found.' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-gray-50 p-6 rounded-xl shadow-inner">
+                    <h3 class="section-title text-center">Full Extracted Text (for debugging)</h3>
+                    <div class="section-content text-sm bg-white border border-gray-200">
+                        <p>{{ extracted_data.full_text if extracted_data.full_text else 'Could not extract full text.' }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p class="mb-3">Developed by **Faisal Khan**</p>
+        <div class="social-icons">
+            <a href="https://khanfaisal.netlify.app" target="_blank" aria-label="Portfolio">
+                <i class="fas fa-globe"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/khanfaisal79960" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://medium.com/@khanfaisal79960" target="_blank" aria-label="Medium">
+                <i class="fab fa-medium"></i>
+            </a>
+            <a href="https://instagram.com/mr._perfect_1004" target="_blank" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://github.com/khanfaisal79960" target="_blank" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
