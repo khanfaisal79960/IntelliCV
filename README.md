@@ -9,7 +9,7 @@
 
 ## 🚀 Live Demo
 
-👉 [**View Live Demo**](https://intelli-cv-smoky.vercel.app/) *(if hosted)*
+👉 [**View Live Demo**](https://intelli-cv-smoky.vercel.app/)
 
 ---
 
