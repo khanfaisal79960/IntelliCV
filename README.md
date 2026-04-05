@@ -106,8 +106,8 @@ If you'd like to contribute or improve the project, feel free to fork the repo, 
 ## 🙋‍♂️ Author
 
 **Faisal Khan**  
-- 🌐 [Portfolio](https://khanfaisal.netlify.app)  
-- 💼 [LinkedIn](https://www.linkedin.com/in/khanfaisal79960)  
-- ✍️ [Medium](https://medium.com/@khanfaisal79960)  
-- 📸 [Instagram](https://instagram.com/mr._perfect_1004)  
-- 💻 [GitHub](https://github.com/khanfaisal79960)  
+- 🌐 [Portfolio](https://khanfaisal.netlify.app)
+- 💼 [LinkedIn](https://www.linkedin.com/in/khanfaisal04)
+- ✍️ [Medium](https://medium.com/@khanfaisal79960)
+- 📸 [Instagram](https://instagram.com/glitchghost21)
+- 💻 [GitHub](https://github.com/khanfaisal79960)
